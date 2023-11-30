@@ -23,7 +23,7 @@ services:
       - SAVECOUNT=20
       #备份文件存储路径，默认: /opt/data
       - BKPATH=/opt/data
-      #备份策略，crond表达式, 默认: -5 0,12 * * *
+      #备份策略，crond表达式, 默认: 5 0,12 * * *
       - CRON=2 0,6,12,18 * * *
     volumes:
       #备份文件存储路径
