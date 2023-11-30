@@ -1,3 +1,10 @@
+# Docker镜像 用于备份 MySQL数据库
+
+## 使用方法:
+
+### docker-compose
+
+``` yaml
 version: "3.4"
 services:
   mysql-backup:
@@ -23,3 +30,4 @@ services:
       - ./data:/opt/data
       #日志路径
       - ./logs:/var/log/mysql-backup
+```
