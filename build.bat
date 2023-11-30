@@ -1,1 +1,1 @@
-cmd /c docker build -t harbor.hoyozero.com/library/mysql-backup:alpine -t harbor.hoyozero.com/library/mysql-backup:latest .
+cmd /c docker build -t wgmac/mysql-backup:1.0.1 -t wgmac/mysql-backup:latest .
