@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
+### 打印日志 ###
 log(){
-    #echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
-    mkdir -p /var/log/mysql-backup
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" > /var/log/mysql-backup/$(date +"%Y-%m-%d").log
+    LOGP=/var/log/mysql-backup
+    LOGF=$LOGP/$(date +"%Y-%m-%d").log
+    mkdir -p $LOGP
+    touch $LOGF
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" >> $LOGF
 }
 
 if [ -z "${DBUSER}" -o -z "${DBPASS}" -o -z "${DBHOST}" ] ;then
