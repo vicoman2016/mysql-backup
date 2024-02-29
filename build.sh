@@ -1,1 +1,1 @@
-docker build -t wgmac/mysql-backup:1.0.0 -t wgmac/mysql-backup:latest .
+docker build -t wgmac/mysql-backup:1.0.4 -t wgmac/mysql-backup:latest .

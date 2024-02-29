@@ -8,4 +8,5 @@ RUN echo 'https://mirrors.aliyun.com/alpine/v3.18/community/' >> /etc/apk/reposi
 RUN echo 'Asia/Shanghai' > /etc/timezone 
 RUN apk update
 RUN apk add --no-cache mariadb-connector-c-dev mysql-client
+RUN crond
 CMD init.sh
