@@ -5,7 +5,6 @@
 ### docker-compose
 
 ``` yaml
-version: "3.4"
 services:
   mysql-backup:
     image: wgmac/mysql-backup
