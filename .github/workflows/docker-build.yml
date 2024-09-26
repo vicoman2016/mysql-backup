@@ -50,4 +50,3 @@ jobs:
         tags: |
           wgmac/mysql-backup:latest
           wgmac/mysql-backup:${{ env.app_version }}
-

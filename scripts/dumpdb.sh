@@ -43,18 +43,22 @@ query(){
 #导出表结构和数据
 dump_schema_and_data(){
     # 获取需要导出的所有数据库
-    DATABASES=$( query "SHOW DATABASES;" | grep -Ev "(information_schema|performance_schema|mysql|sys)" )
-    if [ "${#DATABASES}" -eq 0 ]; then
+    DBS=$( query "SHOW DATABASES;" | grep -Ev "(information_schema|performance_schema|mysql|sys)" )
+    if [ "${#DBS}" -eq 0 ]; then
         log "没有需要导出的数据库"
         return 1
     fi
-    CMD="mysqldump ${DBAUTH} --single-transaction --routines --compact --databases $DATABASES --result-file=$EXPORT_DIR/schemas-and-data-${TIME}.sql"
-    ${CMD} 2>/tmp/query.log
-    if [ $? -ne 0 ]; then
-        log "导出表结构和数据失败，执行命令: ${CMD}, 错误信息: $(cat /tmp/query.log)"
+    #IFS=' ' read -ra DATABASES <<< "$DBS"
+    DATABASES=$(echo "$DBS" | awk 'ORS=" " {print}')
+    CMD="mysqldump ${DBAUTH} --single-transaction --routines --compact --databases ${DATABASES} --result-file=$EXPORT_DIR/schemas-and-data-${TIME}.sql"
+    log -q "执行SQL: ${CMD}"
+    $CMD 2>/tmp/query.log
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        log "[ERROR($RET)]: $(cat /tmp/query.log)"
         return 1
     fi
-    log "导出表结构和数据，结果: $?, 执行命令: ${CMD}"
+    log "导出数据库:[ ${DATABASES}], 执行成功。"
 }
 
 #导出用户和权限
@@ -68,7 +72,7 @@ dump_user_and_grants(){
 }
 # 检查数据库连接
 if [ ! query "SHOW DATABASES;" 2>/dev/null ]; then
-    log "无法连接数据库，请检查参数。"
+    log "[ERROR]无法连接数据库，请检查参数。"
     exit 1
 fi
 
@@ -85,7 +89,9 @@ dump_schema_and_data && \
 dump_user_and_grants
 #压缩文件
 TARGET_FILE=${EXPORT_DIR_ROOT}/${DATE}-${TIME}-$$.tgz
-tar -zcf ${TARGET_FILE} ${EXPORT_DIR} --remove-files
+#此版本的tar不支持--remove-files参数
+tar -zcf ${TARGET_FILE} ${EXPORT_DIR} #--remove-files
+rm -rf ${EXPORT_DIR}
 
 #清除历史文件，保留${SAVECOUNT}个
 if [ $SAVECOUNT -gt 0 ] ; then
@@ -93,4 +99,4 @@ if [ $SAVECOUNT -gt 0 ] ; then
 fi
 
 log "数据库备份完成，备份文件为:${TARGET_FILE}!"
-exit 0
+echo
