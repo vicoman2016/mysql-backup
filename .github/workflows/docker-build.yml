@@ -50,11 +50,4 @@ jobs:
         tags: |
           wgmac/mysql-backup:latest
           wgmac/mysql-backup:${{ env.app_version }}
-    # 这里是通过md文件自动生成dockerhub描述的模块，也可以不需要
-    - name: Docker Hub Description
-      uses: peter-evans/dockerhub-description@v3
-      with:
-        username: wgmac
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: wgmac/kook-ticket-bot
-        readme-filepath: ./README.md
+
