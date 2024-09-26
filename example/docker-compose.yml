@@ -4,13 +4,13 @@ services:
     container_name: "mysql-backup"
     environment:
       #mysql数据库服务器地址，可写IP，域名，默认：localhost
-      - DBHOST=172.172.172.100
-      #mysql数据库端口6
-      - DBPORT=3306
+      - DBHOST=${SERVER}
+      #mysql数据库端口，默认: 3306
+      #- DBPORT=3306
       #mysql数据库用户名
-      - DBUSER=root
+      - DBUSER=${DBUSER}
       #mysql数据库密码
-      - DBPASS=root
+      - DBPASS=${DBPASS}
       #最多保留文件数目，默认: 30
       - SAVECOUNT=20
       #备份文件存储路径，默认: /opt/data

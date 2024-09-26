@@ -32,6 +32,7 @@ jobs:
       id: release_version
       run: |
         app_version=$(cat version.txt)
+        app_version=$(cat version.txt)
         echo "app_version=$app_version" >> $GITHUB_ENV
     # 开始构建镜像
     - name: Build and push
