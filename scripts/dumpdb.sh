@@ -85,7 +85,7 @@ dump_schema_and_data && \
 dump_user_and_grants
 #压缩文件
 TARGET_FILE=${EXPORT_DIR_ROOT}/${DATE}-${TIME}-$$.tgz
-tar -zcf ${TARGET_FILE} ${EXPORT_DIR} #--remove-files
+tar -zcf ${TARGET_FILE} ${EXPORT_DIR} --remove-files
 
 #清除历史文件，保留${SAVECOUNT}个
 if [ $SAVECOUNT -gt 0 ] ; then
