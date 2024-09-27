@@ -5,7 +5,7 @@ DB_PASSWORD=${DBPASS:-}
 DB_HOST=${DBHOST:-localhost}
 DB_PORT=${DBPORT:-3306}
 #SSL_MODE=${SSL_MODE:-DISABLED}
-EXPORT_DIR_ROOT=${EXPORT_DIR_ROOT:-/opt/data}
+EXPORT_DIR_ROOT=${BKPATH:-/opt/data}
 SAVECOUNT=${SAVECOUNT:-0} # 保留多少个备份, 0表示全部保留
 ##################################################
 # 设置认证信息
