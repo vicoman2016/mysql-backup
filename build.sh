@@ -1,13 +1,9 @@
-if [ $# -lt 0 ];then
-    echo "Error: no tag specified"
-    echo "Usage:  [tag]"
-    echo "eg: `basename $0` 1.0.0"
-    exit 1
+docker rmi -f harbor.hoyozero.com/library/mysql-backup:3.0.0
+docker rmi -f harbor.hoyozero.com/library/mysql-backup:latest
+docker build -t harbor.hoyozero.com/library/mysql-backup:3.0.0 .
+docker tag harbor.hoyozero.com/library/mysql-backup:3.0.0 harbor.hoyozero.com/library/mysql-backup:latest
+echo -n "push to harbor? [y/n] " && read -r answer
+if [ "$answer" = "y" ]; then
+  docker push harbor.hoyozero.com/library/mysql-backup:3.0.0
+  docker push harbor.hoyozero.com/library/mysql-backup:latest
 fi
-tag=
-docker compose -f example/docker-compose.yml down
-tag=${1:-latest}
-docker buildx build --platform linux/amd64 -t wgmac/mysql-backup:${tag} -t wgmac/mysql-backup:latest -t harbor.hoyozero.com/library/mysql-backup:${tag}  -t harbor.hoyozero.com/library/mysql-backup:latest .
-sed -i -E 's/VERSION=.*$/VERSION='${tag}'/g' example/.env
-#echo "VERSION=${tag}" > example/.env
-#docker compose -f example/docker-compose.yml  up -d
