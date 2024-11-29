@@ -29,11 +29,13 @@ jobs:
       - name: Release version
         id: release_version
         run: |
-          if [ -n "${GITHUB_REF##*/}" ]; then  # 判断是否有标签被推送（提取标签名部分）
+          echo "GITHUB_REF=${GITHUB_REF}"
+          github_ref = "${GITHUB_REF}"
+          if github_ref.startswith("refs/tags/"):
             app_version="${GITHUB_REF##*/}"
+            if app_version.length() = 0:
+              app_version="latest"
             echo "app_version=$app_version" >> $GITHUB_ENV
-          else
-            echo "app_version=latest" >> $GITHUB_ENV
           fi
       # 开始构建镜像
       - name: Build and push
