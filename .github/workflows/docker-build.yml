@@ -50,5 +50,5 @@ jobs:
           push: true
           # 指定用户/仓库名，根据标签来构建具体版本的镜像tag，latest可以单独考虑是否需要保留等情况
           tags: |
-            wgmac/mysql-backup:${{ env.app_version }}
+            wgmac/mysql-backup:${{ steps.release_version.outputs.app_version }}
             wgmac/mysql-backup:latest
